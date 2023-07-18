@@ -6,6 +6,16 @@ async function authMiddleware(req, res, next) {
         const token = req.headers['x-auth-token'];
         if (token == null) return res.sendStatus(401).json({ msg: "No token, authorization denied" });
 
+                 //allow access from every, elminate CORS
+          res.setHeader('Access-Control-Allow-Origin','*');
+          res.removeHeader('x-powered-by');
+          //set the allowed HTTP methods to be requested
+          res.setHeader('Access-Control-Allow-Methods','POST');
+          //headers clients can use in their requests
+          res.setHeader('Access-Control-Allow-Headers','Content-Type');
+          //allow request to continue and be handled by routes
+          next();
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const adminId = decoded.id;
         const Admin = mongoose.model("Admin");
