@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   }],
-  productName: {
+  serviceName: {
     type: String,
     trim: true,
     required: true,
