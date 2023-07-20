@@ -18,7 +18,7 @@ require("dotenv").config({ path: ".variables.env" });
 // create our Express app
 const app = express();
 app.use(cors({
-  origin: "http://127.0.0.1:5500"
+  origin: ["https://dev-vendormanagement.web.app/", "https://dev-vendormanagement.web.app", "https://odd-culottes-lion.cyclic.app","https://odd-culottes-lion.cyclic.app/"]
 }))
 // serves up static files from the public folder. Anything in public/ will just be served up as the file it is
 app.use(express.static(path.join(__dirname, "public")));
