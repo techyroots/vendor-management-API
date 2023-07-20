@@ -43,10 +43,6 @@ const productSchema = new mongoose.Schema({
     // required:true,
     unique:true,
   },
-  upload :{
-    name: String,
-    imageUrl: String,
-  },
 });
 
 productSchema.pre("save", async function (next) {
