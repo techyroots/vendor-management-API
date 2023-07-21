@@ -111,7 +111,7 @@ router.route("/job/search").get((req, res, next) => authPerm('job', 'view')(req,
 router.route("/job/list").get((req, res, next) => authPerm('job', 'view')(req, res, next), catchErrors(jobController.list));
 
 //_____________ API for products _________
-router.route("/product/create").post((req, res, next) => authPerm('product', 'create')(req, res, next), catchErrors(productController.create));
+router.route("/product/create").post((req, res, next) => authPerm('service', 'create')(req, res, next), catchErrors(productController.create));
 router.route("/product/read/:id").get((req, res, next) => authPerm('service', 'view')(req, res, next), catchErrors(productController.read));
 router
   .route("/product/update/:id")
