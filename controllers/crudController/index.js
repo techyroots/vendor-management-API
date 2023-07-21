@@ -1,7 +1,7 @@
 const crudMethods = require("./crudMethods");
 const mongoose = require("mongoose");
 
-exports.crudMethods = (modelName) => {
+exports.crudController = (modelName) => {
   const Model = mongoose.model(modelName);
   let methods = {};
 
