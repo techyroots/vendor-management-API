@@ -57,14 +57,14 @@ exports.create = async (Model, req, res) => {
         success: false,
         result: null,
         message: "Required fields are not supplied",
+        error : err,
       });
     } else {
       // Server Error
       return res.status(500).json({
         success: false,
         result: null,
-        message: "Oops there is an Error",
-        error : err
+        message: "Oops there is an Error"
       });
     }
   }
