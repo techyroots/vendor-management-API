@@ -64,6 +64,7 @@ exports.create = async (Model, req, res) => {
         success: false,
         result: null,
         message: "Oops there is an Error",
+        error : err
       });
     }
   }
