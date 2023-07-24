@@ -52,10 +52,11 @@ productSchema.pre("save", async function (next) {
     const randomNumber = Math.floor(Math.random() * 10000);
     this.uniqueId = `${initials}${randomNumber}`;
 
-    next();
+   
   } catch (error) {
     next(error);
-  }
+  } 
+  next();
 });
 const Product = mongoose.model("Product", productSchema);
 module.exports = {Product};
