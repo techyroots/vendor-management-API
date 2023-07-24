@@ -39,7 +39,8 @@ exports.read = async (Model, req, res) => {
  *  @returns {string} Message
  */
 
-exports.create = async (Model, req, res).then(() => {
+exports.create = async (Model, req, res) => {
+  try {
     // Creating a new document in the collection
     const result = await new Model(req.body).save();
     // Returning successfull response
@@ -48,7 +49,7 @@ exports.create = async (Model, req, res).then(() => {
       result,
       message: "Successfully Created the document in Model ",
     });
-  }).catch ((err) => {
+  } catch (err) {
     console.log("create",err)
     // If err is thrown by Mongoose due to required validations
     if (err.name == "ValidationError") {
@@ -62,10 +63,10 @@ exports.create = async (Model, req, res).then(() => {
       return res.status(500).json({
         success: false,
         result: null,
-        message: "This is the file of error",
+        message: "Oops there is an Error",
       });
     }
-  })
+  }
 };
 
 /**
