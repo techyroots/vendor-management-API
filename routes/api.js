@@ -58,76 +58,41 @@ router.route("/client/delete/:id").delete((req, res, next) => authPerm('client',
 router.route("/client/search").get((req, res, next) => authPerm('client', 'view')(req, res, next), catchErrors(clientController.search));
 router.route("/client/list").get((req, res, next) => authPerm('client', 'view')(req, res, next), catchErrors(clientController.list));
 
-// var PhotoStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "public/uploads/proofs/");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + "__Proof" + path.extname(file.originalname));
-//   },
-// });
-
-// New Node Api for file
-const storage = multer.diskStorage({
+var PhotoStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Upload files to the "uploads" directory
+    cb(null, "public/uploads/proofs/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Add a timestamp to the filename to make it unique
+    cb(null, Date.now() + "__Proof" + path.extname(file.originalname));
   },
 });
-const upload = multer({ storage: storage });
 
-// const PhotoUpload = multer({
-//   storage: PhotoStorage,
-//   fileFilter: function (req, file, callback) {
-//     var ext = path.extname(file.originalname);
-//     //var size = parseInt(file.size);
-//     if (ext !== ".png" && ext !== ".jpg" && ext !== ".pdf" && ext !== ".jpeg") {
-//       return callback(new Error("Only PNG,JPG,JPEG,PDF are allowed"));
-//     }
-//     if (file.size > 1048576) {
-//       return callback(
-//         new Error("File is Too Big!!! Only upto 10mb Files are allowed")
-//       );
-//     }
-//     callback(null, true);
-//   },
-//   // limits: {
-//   //   fileSize: 1024 * 1024,
-//   // },
-// });
+const PhotoUpload = multer({
+  storage: PhotoStorage,
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    //var size = parseInt(file.size);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".pdf" && ext !== ".jpeg") {
+      return callback(new Error("Only PNG,JPG,JPEG,PDF are allowed"));
+    }
+    if (file.size > 1048576) {
+      return callback(
+        new Error("File is Too Big!!! Only upto 10mb Files are allowed")
+      );
+    }
+    callback(null, true);
+  },
+  // limits: {
+  //   fileSize: 1024 * 1024,
+  // },
+});
 
 router
   .route("/files/upload")
   .post(
-    upload.single('file'), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded.' });
-      }
-  
-      // Assuming you have a mongoose model for the file
-      const FileModel = mongoose.model('File');
-  
-      // Create a new document for the file and save it to the database
-      const newFile = new FileModel({
-        filename: req.file.filename,
-        originalName: req.file.originalname,
-        mimetype: req.file.mimetype,
-        size: req.file.size,
-        // Add other relevant information as needed
-      });
-  
-      await newFile.save();
-  
-      res.status(201).json({ message: 'File uploaded successfully!' });
-    } catch (err) {
-      console.error('Error uploading file:', err.message);
-      res.status(500).json({ error: 'Failed to upload the file.' });
-    }
-  }
-  );
+    [PhotoUpload.single("file"), setFilePathToBody],
+    catchErrors(fileuploadController.fileupload)
+);
 
 //_____________ API for roles __________
 router.route("/role/create").post((req, res, next) => authPerm('role', 'create')(req, res, next), catchErrors(rolecontroller.create));
