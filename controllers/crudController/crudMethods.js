@@ -42,12 +42,18 @@ exports.read = async (Model, req, res) => {
 exports.create = async (Model, req, res) => {
   // try {
     // Creating a new document in the collection
-    
-   new Model(req.body).save().then().catch((e)=>{
-      return res.status(200).json(
-        req.body
-      );
-    })
+   new Model(req.body).save().then(function(err) {
+  if (!err) {
+    res.send("Successfully Added to th DataBase.");
+  } else {
+    res.send(err);
+  }
+});
+   // .save().then().catch((e)=>{
+   //    return res.status(200).json(
+   //      req.body
+   //    );
+   //  })
     // Returning successfull response
     // return res.status(200).json({
     //   success: true,
