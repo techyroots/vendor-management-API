@@ -100,6 +100,7 @@ exports.update = async (Model, req, res) => {
         success: false,
         result: null,
         message: "Required fields are not supplied",
+        error : err
       });
     } else {
       // Server Error
