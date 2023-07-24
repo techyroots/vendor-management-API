@@ -15,10 +15,10 @@ const vendorSchema = new mongoose.Schema({
     // required:true,
     unique:true,
   },
-  service: {
+  service: [{
     type: String,
     required: true,
-  },
+  }],
   vendorname: {
     type: String,
     trim: true,
