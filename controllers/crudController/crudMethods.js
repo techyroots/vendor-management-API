@@ -46,7 +46,7 @@ exports.create = async (Model, req, res) => {
    new Model(req.body).save().then().catch((e)=>{
       return res.status(200).json({
       success: true,
-      result : e,
+      e,
       message: "Successfully Created the document in Model ",
       });
     })
