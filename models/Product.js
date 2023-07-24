@@ -41,21 +41,11 @@ const productSchema = new mongoose.Schema({
   uniqueId : {
     type:String,
     // required:true,
-    unique:true,
+    // unique:true,
   },
 });
 
 productSchema.pre("save", async function (next) {
-  try {
-    // Generate unique ID based on the document's field values
-    const initials = `${this.title.charAt(0)}${this.client.charAt(0)}`;
-    const randomNumber = Math.floor(Math.random() * 10000);
-    this.uniqueId = `${initials}${randomNumber}`;
-
-   
-  } catch (error) {
-    next(error);
-  } 
   next();
 });
 const Product = mongoose.model("Product", productSchema);
