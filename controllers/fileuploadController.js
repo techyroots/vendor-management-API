@@ -67,6 +67,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// // Export the uploadImage function
-// module.exports = { fileupload };
+// Export the uploadImage function
+module.exports = { fileupload };
 
