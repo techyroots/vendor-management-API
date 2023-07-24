@@ -40,47 +40,33 @@ exports.read = async (Model, req, res) => {
  */
 
 exports.create = async (Model, req, res) => {
-  // try {
+  try {
     // Creating a new document in the collection
-   new Model(req.body).save().then(function(err) {
-  if (!err) {
-    res.send("Successfully Added to th DataBase.");
-  } else {
-    res.send(err);
-  }
-});
-   // .save().then().catch((e)=>{
-   //    return res.status(200).json(
-   //      req.body
-   //    );
-   //  })
+    const result = await new Model(req.body).save();
     // Returning successfull response
-    // return res.status(200).json({
-    //   success: true,
-    //   result,
-    //   message: "Successfully Created the document in Model ",
-    // });
-    // console.log("This is coming in try BLOCK") ;
-  // } catch (err) {
-  //   console.log("create",err)
-  //   // If err is thrown by Mongoose due to required validations
-  //   if (err.name == "ValidationError") {
-  //     return res.status(400).json({
-  //       success: false,
-  //       result: null,
-  //       message: "Required fields are not supplied",
-  //     });
-  //   } else {
-  //     // Server Error
-  //     return res.status(500).json({
-  //       success: false,
-  //       result: null,
-  //       message: "This will throw a error",
-  //       dbError:err
-  //     });
-      
-  //   }
-  // }
+    return res.status(200).json({
+      success: true,
+      result,
+      message: "Successfully Created the document in Model ",
+    });
+  } catch (err) {
+    console.log("create",err)
+    // If err is thrown by Mongoose due to required validations
+    if (err.name == "ValidationError") {
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: "Required fields are not supplied",
+      });
+    } else {
+      // Server Error
+      return res.status(500).json({
+        success: false,
+        result: null,
+        message: "Oops there is an Error",
+      });
+    }
+  }
 };
 
 /**
