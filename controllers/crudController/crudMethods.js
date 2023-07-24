@@ -49,6 +49,7 @@ exports.create = async (Model, req, res) => {
       result,
       message: "Successfully Created the document in Model ",
     });
+    console.log("This is coming in try BLOCK") ;
   } catch (err) {
     console.log("create",err)
     // If err is thrown by Mongoose due to required validations
@@ -63,7 +64,7 @@ exports.create = async (Model, req, res) => {
       return res.status(500).json({
         success: false,
         result: null,
-        message: "Oops there is an Error",
+        message: "This will throw a error",
       });
     }
   }
