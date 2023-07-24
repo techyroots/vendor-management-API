@@ -15,12 +15,6 @@ const {
 // router.route("/login").post(catchErrors(loginDemo));
 
 // use {login } from authController , uncomment line below
-router.route("/").get((req,res)=>{
-  res.json({
-    success:true,
-    msg:"API is working"
-  })
-})
 router.route("/login").post(catchErrors(login));
 router.route("/logout").post(isValidToken, catchErrors(logout));
 
