@@ -46,7 +46,15 @@ const productSchema = new mongoose.Schema({
 });
 
 productSchema.pre("save", async function (next) {
-  next();
+   try {
+    // Generate unique ID based on the document's field values
+    const initials = `${this.productName.charAt(0)}${this.client.charAt(0)}`;
+    const randomNumber = Math.floor(Math.random() * 10000);
+    this.uniqueId = `${initials}${randomNumber}`;
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 const Product = mongoose.model("Product", productSchema);
 module.exports = {Product};
